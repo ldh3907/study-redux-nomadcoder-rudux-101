@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# vanilla-redux
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1.redux == state를 관리할 수 있게해주는 라이브러리?
 
-## Available Scripts
+ex 
 
-In the project directory, you can run:
+    import { createStore } from "redux";
 
-### `npm start`
+라는 형식으로 import
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2.createStore == state를 넣을 수 있는 공간 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+ex) 
 
-### `npm test`
+    countStore = createStore() 라는 형식으로 선언.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 하지만 저것만으로는 에러가 난다. 이유는
 
-### `npm run build`
+3.reducer == state를 관리하고 바꿔주는 함수? 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ex) 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    countStore = createStore(reducer) <= 이렇게 넣어줌
+reducer의 이름은 마음대로 바꿔도 상관없다. reducer에서는 받은 state를 가공해서 리턴해준다. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ex) 
 
-### `npm run eject`
+    const countModifier = (count = 0) =>{
+        return count
+    }
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4.getState == reducer에서 리턴해준 state 를 받아오는 함수. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ex) 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    console.log(countStore.getState()) 이런식으로 호출
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+5.action == reducer 에서 state를 관리하거나 가공할때 필요한 함수. 
 
-## Learn More
+ex) 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    const countModifier = (count = 0, action) =>{
+        console.log(action)
+        return count
+    } 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+6.dispatch == 오브젝트를 리턴해서 reducer에게 주는 함수 
 
-### Code Splitting
+ex) 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    countStore.dispatch({type : "add"})
 
-### Analyzing the Bundle Size
+여기서 리턴한 type을 통해 reducer에서 state를 가공하고 관리한다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+ex) 
 
-### Making a Progressive Web App
+    const countModifier = (count = 0, action) =>{
+        if(action.type == "add"){
+            #add function
+        }
+        return count   
+    }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+7.subscribe == 스토어 안에있는 state의 변화를 감지하여 함수를 호출하는 함수
 
-### Advanced Configuration
+ex)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    countStore.subscribe(func)
