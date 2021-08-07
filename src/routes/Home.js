@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import ToDo from "../components/ToDo";
-import { actionCreators } from "./Store";
+import { actionCreators } from "../Store";
 
 const Home = ({ toDos, addToDo }) => {
   const [text, setText] = useState("");
@@ -16,7 +16,11 @@ const Home = ({ toDos, addToDo }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    addToDo(text);
+    if (text === "") {
+      addToDo("내용 없음");
+    } else {
+      addToDo(text);
+    }
     setText("");
   };
   return (
