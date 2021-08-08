@@ -2,6 +2,23 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 //normal Redux
 
+// const ADD = "ADD";
+// const DELETE = "DELETE";
+
+// addToDo = (text) => {
+//   return {
+//     type: add,
+//     text,
+//   };
+// };
+
+// deleteToDo = (id) => {
+//   return {
+//     type: DELETE,
+//     id: parseInt(id),
+//   };
+// };
+
 // const reducer = (state = [], action) => {
 //   switch (action.type) {
 //     case addToDo.type:
